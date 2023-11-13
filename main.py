@@ -1,11 +1,13 @@
 import queue
 import random as rand
 from time import sleep
+from collections import deque
 
 import passenger
 import room
 
 rooms = []
+assignments = []
 a_deck_rooms = 20
 b_deck_rooms = 100
 c_deck_rooms = 200
@@ -110,7 +112,7 @@ def passenger_check(line):
     line.put(new_passenger)
     print('Sleeping for 2 seconds...')
     print('==========================')
-    sleep(2)
+    # sleep(2)
 
 
 def create_rooms():
@@ -134,8 +136,19 @@ def create_rooms():
 
 
 def assign_rooms(line):
-    global rooms
-
+    global rooms, assignments
+    while True:
+        if line.empty:
+            break
+        data = line.get()
+        first_name = data.__getattribute__('fname')
+        last_name = data.__getattribute__('lname')
+        gender_num = data.__getattribute__('gendernum')
+        pass_color = data.__getattribute__('pass_color')
+        print(first_name)
+        print(last_name)
+        print(gender_num)
+        print(pass_color)
 
 
 if __name__ == '__main__':
