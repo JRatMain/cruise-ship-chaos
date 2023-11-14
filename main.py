@@ -1,3 +1,4 @@
+# Importing modules and functions for various purposes
 import queue
 import random as rand
 from time import sleep
@@ -6,6 +7,7 @@ import tabulate
 
 import assignment
 
+# Global variables.
 rooms = []
 assignments = []
 a_deck_rooms = 20
@@ -73,6 +75,7 @@ def pick_male_name():
         return 'Jerry'
 
 
+# Creates a list of passengers to be assigned to rooms.
 def passenger_check(line):
     global a_deck_rooms, b_deck_rooms, \
         c_deck_rooms, d_deck_rooms
@@ -104,6 +107,12 @@ def passenger_check(line):
             d_deck_rooms -= 1
 
     print('Passenger Admitted.')
+    print(first_name + ' ' + surname)
+    if gender_num == 0:
+        print('Female')
+    else:
+        print('Male')
+    print('Pass Color: ' + pass_color)
     print('==========================')
 
     new_passenger = [first_name, surname, gender_num, pass_color]
@@ -113,6 +122,7 @@ def passenger_check(line):
     sleep(1)
 
 
+# Creates a list that will act as a stack.
 def create_rooms():
     global rooms
     for i in range(820):
@@ -121,6 +131,7 @@ def create_rooms():
         rooms.append(new_room)
 
 
+# assigns rooms to each passenger.
 def assign_rooms(line):
     global rooms, assignments
     while not line.empty():
@@ -144,11 +155,22 @@ def print_assignments():
         last_name = data.__getattribute__('last_name')
         room_num = data.__getattribute__('room_num')
         pass_color = data.__getattribute__('pass_color')
-        assignment_list.append([first_name, last_name, room_num, pass_color])
+        if pass_color == 'Green':
+            deck = 'A'
+        if pass_color == 'Blue':
+            deck = 'B'
+        if pass_color == 'Orange':
+            deck = 'C'
+        if pass_color == 'Red':
+            deck = 'D'
+        else:
+            pass
+        assignment_list.append([first_name, last_name, room_num, pass_color, deck])
     print(tabulate.tabulate(assignment_list,
-                            headers=['First Name', 'Last Name', 'Room Number', 'Pass Color']))
+                            headers=['First Name', 'Last Name', 'Room Number', 'Pass Color', 'Deck']))
 
 
+# Main function.
 if __name__ == '__main__':
     passenger_line = queue.Queue(820)
     while not passenger_line.full():
