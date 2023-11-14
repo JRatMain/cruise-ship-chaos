@@ -2,7 +2,9 @@ import queue
 import random as rand
 from time import sleep
 from collections import deque
+import tabulate
 
+import assignment
 import passenger
 import room
 
@@ -111,29 +113,16 @@ def passenger_check(line):
     # new_passenger = passenger.passenger(first_name, surname, gender_num, pass_color)
     new_passenger = [first_name, surname, gender_num, pass_color]
     line.put(new_passenger)
-    print('Sleeping for 2 seconds...')
+    print('Sleeping for 1 second...')
     print('==========================')
-    # sleep(2)
+    # sleep(1)
 
 
 def create_rooms():
     global rooms
     for i in range(820):
         num = i + 1
-        if num <= 20:
-            pass_color = 'Green'
-        elif 20 < num <= 120:
-            pass_color = 'Blue'
-        elif 120 < num <= 320:
-            pass_color = 'Orange'
-        elif 320 < num:
-            pass_color = 'Red'
-        else:
-            pass_color = 'Unknown'
-            raise RuntimeError(pass_color + ' is invalid for a pass color.')
-
-        # new_room = room.room(num, pass_color)
-        new_room = [num, pass_color]
+        new_room = [num]
         rooms.append(new_room)
 
 
@@ -143,12 +132,26 @@ def assign_rooms(line):
         data = line.get()
         first_name = data[0]
         last_name = data[1]
-        gender_num = data[2]
         pass_color = data[3]
-        print(first_name)
-        print(last_name)
-        print(gender_num)
-        print(pass_color)
+        room = rooms.pop()
+        room_number = room[0]
+        new_assignment = assignment.assignment(first_name, last_name, room_number, pass_color)
+        assignments.append(new_assignment)
+
+
+# Unpacks data from the assignments objects and prints them using the tabulate module.
+def print_assignments():
+    global assignments
+    assignment_list = []
+    for i in range(len(assignments)):
+        data = assignments[i]
+        first_name = data.__getattribute__('first_name')
+        last_name = data.__getattribute__('last_name')
+        room_num = data.__getattribute__('room_num')
+        pass_color = data.__getattribute__('pass_color')
+        assignment_list.append([first_name, last_name, room_num, pass_color])
+    print(tabulate.tabulate(assignment_list,
+                            headers=['First Name', 'Last Name', 'Room Number', 'Pass Color']))
 
 
 if __name__ == '__main__':
@@ -157,3 +160,4 @@ if __name__ == '__main__':
         passenger_check(passenger_line)
     create_rooms()
     assign_rooms(passenger_line)
+    print_assignments()
