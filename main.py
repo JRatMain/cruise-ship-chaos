@@ -1,12 +1,10 @@
 import queue
 import random as rand
 from time import sleep
-from collections import deque
+
 import tabulate
 
 import assignment
-import passenger
-import room
 
 rooms = []
 assignments = []
@@ -105,17 +103,14 @@ def passenger_check(line):
             pass_color = 'Red'
             d_deck_rooms -= 1
 
-    print(first_name + ' ' + surname)
-    print(gender_num)
-    print(pass_color)
+    print('Passenger Admitted.')
     print('==========================')
 
-    # new_passenger = passenger.passenger(first_name, surname, gender_num, pass_color)
     new_passenger = [first_name, surname, gender_num, pass_color]
     line.put(new_passenger)
     print('Sleeping for 1 second...')
     print('==========================')
-    # sleep(1)
+    sleep(1)
 
 
 def create_rooms():
@@ -160,4 +155,6 @@ if __name__ == '__main__':
         passenger_check(passenger_line)
     create_rooms()
     assign_rooms(passenger_line)
+    print('Room assignments complete. Results will print in 5 seconds.')
+    sleep(5)
     print_assignments()
