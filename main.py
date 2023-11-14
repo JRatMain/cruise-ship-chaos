@@ -108,7 +108,8 @@ def passenger_check(line):
     print(pass_color)
     print('==========================')
 
-    new_passenger = passenger.passenger(first_name, surname, gender_num, pass_color)
+    # new_passenger = passenger.passenger(first_name, surname, gender_num, pass_color)
+    new_passenger = [first_name, surname, gender_num, pass_color]
     line.put(new_passenger)
     print('Sleeping for 2 seconds...')
     print('==========================')
@@ -131,20 +132,19 @@ def create_rooms():
             pass_color = 'Unknown'
             raise RuntimeError(pass_color + ' is invalid for a pass color.')
 
-        new_room = room.room(num, pass_color)
+        # new_room = room.room(num, pass_color)
+        new_room = [num, pass_color]
         rooms.append(new_room)
 
 
 def assign_rooms(line):
     global rooms, assignments
-    while True:
-        if line.empty:
-            break
+    while not line.empty():
         data = line.get()
-        first_name = data.__getattribute__('fname')
-        last_name = data.__getattribute__('lname')
-        gender_num = data.__getattribute__('gendernum')
-        pass_color = data.__getattribute__('pass_color')
+        first_name = data[0]
+        last_name = data[1]
+        gender_num = data[2]
+        pass_color = data[3]
         print(first_name)
         print(last_name)
         print(gender_num)
