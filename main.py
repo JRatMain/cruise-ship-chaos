@@ -157,11 +157,11 @@ def print_assignments():
         pass_color = data.__getattribute__('pass_color')
         if pass_color == 'Green':
             deck = 'A'
-        if pass_color == 'Blue':
+        elif pass_color == 'Blue':
             deck = 'B'
-        if pass_color == 'Orange':
+        elif pass_color == 'Orange':
             deck = 'C'
-        if pass_color == 'Red':
+        elif pass_color == 'Red':
             deck = 'D'
         else:
             pass
